@@ -6,7 +6,7 @@ import Card from "../Card";
 type MainCardProps = {
   title: string;
   participating: number;
-  imgUrl: string;
+  imgUrl: string | number;
   name: string;
   hp: number;
   damageDone: number;
@@ -23,10 +23,16 @@ export default function MainCard({
   return (
     <Card>
       <View style={styles.container} testID="main-card">
-        <Text testID="title">{title}</Text>
-        <Text testID="participating">{participating}/10 Participating</Text>
+        <Text testID="maincard-title" /*testID="title"*/>{title}</Text>
+        <Text testID="maincard-participating" /*testID="participating"*/>{participating}/10 Participating</Text>
 
-        <Image testID="img" source={{ uri: imgUrl }} width={100} height={100} />
+        <Image
+          testID="maincard-image"
+          /*testID="img"*/
+          source={typeof imgUrl === "string" ? { uri: imgUrl } : imgUrl}
+          width={100}
+          height={100}
+        />
 
         <View style={styles.statsContainer}>
           <View style={styles.icon}>
@@ -34,18 +40,18 @@ export default function MainCard({
           </View>
 
           <View style={styles.statsRight}>
-            <Text testID="name">{name}</Text>
+            <Text testID="maincard-name" /*testID="name"*/>{name}</Text>
 
             <View style={styles.barContainer}>
               <View style={{ ...styles.bar, width: "80%" }} />
             </View>
 
-            <Text testID="hp">{(hp < 0) ? 0 : hp} / 1500 HP</Text>
+            <Text testID="maincard-hp" /*testID="hp"*/>{(hp < 0) ? 0 : hp} / 1500 HP</Text>
           </View>
         </View>
 
         <View style={styles.footer}>
-          <Text>{damageDone} Damage Done</Text>
+          <Text testID="maincard-damage">{damageDone} Damage Done</Text>
         </View>
       </View>
     </Card>

@@ -1,46 +1,43 @@
 import { render } from '@testing-library/react-native';
-import { Text } from 'react-native';
 import MainCard from '../cards/MainCard';
 
 jest.mock('@expo/vector-icons', () => ({
-  MaterialCommunityIcons: () => null,
+    MaterialCommunityIcons: () => null,
 }));
 
+//rodar testes com yarn run test
 
 describe('testar Main Card', () => {
 
     const props = {
-    title: "Batalha Épica",
-    participating: 5,
-    imgUrl: "https://static.vecteezy.com/system/resources/thumbnails/050/597/886/small/red-dragon-head-illustration-png.png",
-    name: "Dragão Vermelho",
-    hp: -2,
-    damageDone: 800
-  };
+        title: "Batalha Épica",
+        participating: 5,
+        imgUrl: "https://static.vecteezy.com/system/resources/thumbnails/050/597/886/small/red-dragon-head-illustration-png.png",
+        name: "Dragão Vermelho",
+        hp: -2,
+        damageDone: 800
+    };
 
-    test('renderizar Titulo', () => {
-        const { getByText } = render(<MainCard {...props}/>);
-        
-        expect(getByText("Batalha Épica").props.children).toBeTruthy();
-    })
+    test('renderiza o título', () => {
+        const { getByTestId } = render(<MainCard {...props} />);
+        expect(getByTestId('maincard-title').props.children).toBe(props.title);
+    });
 
-    test('renderizar nome', () => {
-        const { getByText } = render(<MainCard {...props}/>);
-        
-        expect(getByText("Dragão Vermelho")).toBeVisible()
-    })
+    test('renderiza o nome', () => {
+        const { getByTestId } = render(<MainCard {...props} />);
+        expect(getByTestId('maincard-name').props.children).toBe(props.name);
+    });
 
-    test('renderizar img', () => {
-        const { getByTestId } = render(<MainCard {...props}/>);
-        
-        expect(getByTestId("img").props.source.uri).toBe(props.imgUrl);
-    })
+    test('renderiza a imagem com a URI correta', () => {
+        const { getByTestId } = render(<MainCard {...props} />);
+        expect(getByTestId('maincard-image').props.source.uri).toBe(props.imgUrl);
+    });
 
-    test('se o hp não aceita numeros negativos', () => {
-        const { getByTestId } = render(<MainCard {...props}/>);
-        const stringHP = getByTestId("hp").props.children.join("");
-        const hp = parseInt(stringHP);
+    test('hp negativo é mostrado como 0', () => {
+        const { getByTestId } = render(<MainCard {...props} />);
+        const fullText = getByTestId('maincard-hp').props.children as string;
 
-        expect(hp).toBe(0);
-    })
-})
+        const currentHp = parseInt(fullText); 
+        expect(currentHp).toBe(0);
+    });
+});
