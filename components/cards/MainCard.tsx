@@ -22,11 +22,11 @@ export default function MainCard({
 }: MainCardProps) {
   return (
     <Card>
-      <View style={styles.container}>
-        <Text>{title}</Text>
-        <Text>{participating}/10 Participating</Text>
+      <View style={styles.container} testID="main-card">
+        <Text testID="title">{title}</Text>
+        <Text testID="participating">{participating}/10 Participating</Text>
 
-        <Image source={{ uri: imgUrl }} width={100} height={100} />
+        <Image testID="img" source={{ uri: imgUrl }} width={100} height={100} />
 
         <View style={styles.statsContainer}>
           <View style={styles.icon}>
@@ -34,13 +34,13 @@ export default function MainCard({
           </View>
 
           <View style={styles.statsRight}>
-            <Text>{name}</Text>
+            <Text testID="name">{name}</Text>
 
             <View style={styles.barContainer}>
               <View style={{ ...styles.bar, width: "80%" }} />
             </View>
 
-            <Text>{hp} / 1500 HP</Text>
+            <Text testID="hp">{(hp < 0) ? 0 : hp} / 1500 HP</Text>
           </View>
         </View>
 
